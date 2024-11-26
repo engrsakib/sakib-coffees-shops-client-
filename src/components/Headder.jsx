@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 const Headder = () => {
     const links = (
       <>
-        <Link className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200">
+        <Link
+          to={`/`}
+          className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200"
+        >
           Home
         </Link>
         <Link className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200">
           All Cofee
         </Link>
-        <Link className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200">
+        <Link
+          to={"/coffe/add-coffe"}
+          className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200"
+        >
           Add Cofee
         </Link>
       </>
