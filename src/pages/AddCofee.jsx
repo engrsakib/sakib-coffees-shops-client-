@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddCofee = () => {
   // State for form inputs
   const [formData, setFormData] = useState({
     name: "",
-    chef: "",
+    Quantity: "",
     supplier: "",
     taste: "",
     category: "",
     details: "",
     photo: "",
+    price: ""
   });
 
+  
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,39 +31,36 @@ const AddCofee = () => {
     console.log("Sending Data:", formData); // Debugging purposes
 
     try {
-      const response = await fetch(
-        "https://your-backend-url.com/api/update-coffee",
-        {
-          method: "POST", // or PUT depending on your API
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch("http://localhost:5000/coffee", {
+        method: "POST", // or PUT depending on your API
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
-        const result = await response.json();
-        console.log("Server Response:", result);
-        alert("Coffee details updated successfully!");
+        // const result = await response.json();
+        // console.log("Server Response:", result);
+        toast.success("Coffee added successfully");
       } else {
         console.error("Failed to update coffee details:", response.status);
-        alert("Error updating coffee details. Please try again.");
+        toast.alert("Error updating coffee details. Please try again.");
       }
     } catch (error) {
       console.error("Network Error:", error);
-      alert("Network error. Please check your connection.");
+      toast.alert("Network error. Please check your connection.");
     }
   };
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-12">
         <div className="card w-full max-w-4xl shadow-lg bg-white p-8 rounded-lg">
           {/* Back to home */}
-          <button className="btn btn-sm btn-outline mb-4">
+          <Link to={`/`} className="btn btn-sm btn-outline mb-4">
             <span className="mr-2">←</span> Back to home
-          </button>
+          </Link>
 
           {/* Title */}
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
@@ -81,22 +82,24 @@ const AddCofee = () => {
                 <input
                   type="text"
                   name="name"
+                  required
                   placeholder="American Coffee"
                   value={formData.name}
                   onChange={handleChange}
                   className="input input-bordered w-full"
                 />
               </div>
-              {/* Chef */}
+              {/* Quantity */}
               <div>
                 <label className="label">
-                  <span className="label-text">Chef</span>
+                  <span className="label-text">Quantity</span>
                 </label>
                 <input
-                  type="text"
-                  name="chef"
-                  placeholder="Mr. Matin Paul"
-                  value={formData.chef}
+                  type="number"
+                  name="Quantity"
+                  required
+                  placeholder="01"
+                  value={formData.Quantity}
                   onChange={handleChange}
                   className="input input-bordered w-full"
                 />
@@ -110,6 +113,7 @@ const AddCofee = () => {
                 <input
                   type="text"
                   name="supplier"
+                  required
                   placeholder="Cappu Authorizer"
                   value={formData.supplier}
                   onChange={handleChange}
@@ -145,20 +149,35 @@ const AddCofee = () => {
                   className="input input-bordered w-full"
                 />
               </div>
-              {/* Details */}
+              {/* price */}
               <div>
                 <label className="label">
-                  <span className="label-text">Details</span>
+                  <span className="label-text">price</span>
                 </label>
                 <input
-                  type="text"
-                  name="details"
-                  placeholder="Espresso with hot water"
-                  value={formData.details}
+                  type="number"
+                  name="price"
+                  placeholder="Price"
+                  value={formData.price}
                   onChange={handleChange}
                   className="input input-bordered w-full"
                 />
               </div>
+            </div>
+
+            {/* Details */}
+            <div className="w-full h-[150px]">
+              <label className="label">
+                <span className="label-text">Details</span>
+              </label>
+              <textarea
+                type="text"
+                name="details"
+                placeholder="Espresso with hot water"
+                value={formData.details}
+                onChange={handleChange}
+                className="input input-bordered w-full"
+              />
             </div>
 
             {/* Photo URL */}
@@ -168,6 +187,7 @@ const AddCofee = () => {
               </label>
               <input
                 type="text"
+                required
                 name="photo"
                 placeholder="https://via.placeholder.com"
                 value={formData.photo}
