@@ -2,8 +2,8 @@ import React from "react";
 import { FaEye, FaPenFancy, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
-const Coffee = ({ cof }) => {
-//   console.log(cof);
+const Coffee = ({ cof, setALL, all }) => {
+  //   console.log(cof);
   const {
     _id,
     photo,
@@ -16,8 +16,7 @@ const Coffee = ({ cof }) => {
     price,
   } = cof;
 
-  const handleDelete = (id)=>{
-    
+  const handleDelete = (id) => {
     // conformation massage
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -43,10 +42,11 @@ const Coffee = ({ cof }) => {
             text: "Your coffee has been deleted.",
             icon: "success",
           });
-          fetch(`http://localhost:5000/coffee/${id}`,{
-            method: "DELETE"
-          } );
-          
+          fetch(`http://localhost:5000/coffee/${id}`, {
+            method: "DELETE",
+          });
+          const remain = all.filter(co => co._id != _id);
+          setALL(remain);
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -58,7 +58,7 @@ const Coffee = ({ cof }) => {
           });
         }
       });
-  }
+  };
   return (
     <>
       <div className="flex items-center bg-neutral-100 shadow-md rounded-lg p-4">
