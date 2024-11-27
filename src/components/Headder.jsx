@@ -10,7 +10,10 @@ const Headder = () => {
         >
           Home
         </Link>
-        <Link className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200">
+        <Link
+          to={`/coffe`}
+          className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200"
+        >
           All Cofee
         </Link>
         <Link
