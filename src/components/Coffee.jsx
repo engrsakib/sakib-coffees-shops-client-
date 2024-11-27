@@ -1,9 +1,11 @@
 import React from "react";
 import { FaEye, FaPenFancy, FaTrash } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 const Coffee = ({ cof }) => {
-  console.log(cof);
+//   console.log(cof);
   const {
+    _id,
     photo,
     name,
     details,
@@ -13,6 +15,50 @@ const Coffee = ({ cof }) => {
     supplier,
     price,
   } = cof;
+
+  const handleDelete = (id)=>{
+    
+    // conformation massage
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your coffee has been deleted.",
+            icon: "success",
+          });
+          fetch(`http://localhost:5000/coffee/${id}`,{
+            method: "DELETE"
+          } );
+          
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error",
+          });
+        }
+      });
+  }
   return (
     <>
       <div className="flex items-center bg-neutral-100 shadow-md rounded-lg p-4">
@@ -39,10 +85,16 @@ const Coffee = ({ cof }) => {
           <button className="btn btn-sm btn-outline btn-warning">
             <FaEye />
           </button>
-          <button className="btn btn-sm btn-outline btn-secondary">
+          <Link
+            to={`/coffe/update-coffe/${_id}`}
+            className="btn btn-sm btn-outline btn-secondary"
+          >
             <FaPenFancy />
-          </button>
-          <button className="btn btn-sm btn-outline btn-error">
+          </Link>
+          <button
+            onClick={() => handleDelete(_id)}
+            className="btn btn-sm btn-outline btn-error"
+          >
             <FaTrash />
           </button>
         </div>

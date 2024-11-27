@@ -6,7 +6,7 @@ const Coffeeall = () => {
   const all = useLoaderData();
 //   console.log(all);
   return (
-    <div>
+    <div className="grid md:grid-cols-2 gap-3">
       {all.map((cof, i) => (
         <Coffee key={i} cof={cof}></Coffee>
       ))}

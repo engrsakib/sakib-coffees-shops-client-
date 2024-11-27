@@ -51,6 +51,7 @@ const AddCofee = () => {
       console.error("Network Error:", error);
       toast.alert("Network error. Please check your connection.");
     }
+    
   };
 
   return (
