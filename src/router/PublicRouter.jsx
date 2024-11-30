@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const PublicRouter = () => {
     const { user, loading } = useContext(AuthContext);

@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "react-sweetalert2";
 
 const Register = () => {
+  const { createUser, setUser, setLoadding } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -9,23 +15,22 @@ const Register = () => {
     photo: "",
   });
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  // Handle form input changes
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Password Validation
     if (!passwordRegex.test(formData.password)) {
       setPasswordError(
         "Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character."
@@ -35,7 +40,6 @@ const Register = () => {
       setPasswordError("");
     }
 
-    // Confirm Password Validation
     if (formData.password !== formData.confirmPassword) {
       setConfirmPasswordError("Passwords do not match.");
       return;
@@ -44,11 +48,38 @@ const Register = () => {
     }
 
     console.log("Form Data Submitted:", formData);
+    const {email, password, name, photo} = formData;
+    const newUser = {name, email, photo};
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+       console.log(user)
+
+       fetch("http://localhost:5000/users", {
+        method: 'POST',
+        headers:{
+            'content-type' : 'application/json'
+        },
+        body: JSON.stringify(newUser)
+       })
+         .then((res) => res.json())
+         .then((data) => {
+           console.log(data);
+         });
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode);
+        // ..
+      });
   };
 
   return (
     <>
-      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-500">
+      <div className="flex justify-center items-center h-auto bg-gradient-to-r from-green-400 via-blue-500 to-purple-500">
         <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">
             Create an Account
@@ -88,12 +119,12 @@ const Register = () => {
             </div>
 
             {/* Password Input */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
               <input
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -101,18 +132,24 @@ const Register = () => {
                 className="input input-bordered w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 required
               />
+              <span
+                onClick={() => setPasswordVisible(!passwordVisible)}
+                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
               {passwordError && (
                 <p className="text-sm text-red-500 mt-1">{passwordError}</p>
               )}
             </div>
 
             {/* Confirm Password Input */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Confirm Password
               </label>
               <input
-                type="password"
+                type={confirmPasswordVisible ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
@@ -120,6 +157,14 @@ const Register = () => {
                 className="input input-bordered w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                 required
               />
+              <span
+                onClick={() =>
+                  setConfirmPasswordVisible(!confirmPasswordVisible)
+                }
+                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+              >
+                {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
               {confirmPasswordError && (
                 <p className="text-sm text-red-500 mt-1">
                   {confirmPasswordError}
@@ -154,9 +199,9 @@ const Register = () => {
           {/* Additional Options */}
           <p className="text-center text-sm text-gray-600 mt-4">
             Already have an account?{" "}
-            <a href="#" className="text-blue-500 hover:underline">
+            <Link to="/auth/user/login" className="text-blue-500 hover:underline">
               Log In
-            </a>
+            </Link>
           </p>
         </div>
       </div>
