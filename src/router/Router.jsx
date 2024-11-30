@@ -4,6 +4,9 @@ import AddCofee from "../pages/AddCofee";
 import Home from "../pages/Home";
 import UpdateCoffe from "../pages/UpdateCoffe";
 import Coffeeall from "../pages/Coffeeall";
+import PublicRoutes from "./PublicRouter";
+import LogIn from "../pages/LogIn";
+import Register from "../pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/auth/user/login",
+        element: <LogIn></LogIn>,
+      },
+      {
+        path: "/auth/user/register",
+        element: <Register></Register>,
       },
     ],
   },

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const UpdateCoffe = () => {
   const data = useLoaderData();
-  console.log(data);
+//   console.log(data);
 
   const {
     _id,

@@ -28,7 +28,7 @@ const AddCofee = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Sending Data:", formData); // Debugging purposes
+    // console.log("Sending Data:", formData); // Debugging purposes
 
     try {
       const response = await fetch("http://localhost:5000/coffee", {
