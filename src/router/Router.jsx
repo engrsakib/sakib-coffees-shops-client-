@@ -7,6 +7,7 @@ import Coffeeall from "../pages/Coffeeall";
 import PublicRoutes from "./PublicRouter";
 import LogIn from "../pages/LogIn";
 import Register from "../pages/Register";
+import Users from "../pages/Users";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/auth/user/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/auth/user",
+        element: <Users></Users>,
       },
     ],
   },

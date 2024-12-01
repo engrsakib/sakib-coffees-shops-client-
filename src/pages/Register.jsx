@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Swal from "react-sweetalert2";
+import Swal from "sweetalert2";
+// import Swal from "react-sweetalert2";
 
 const Register = () => {
   const { createUser, setUser, setLoadding } = useContext(AuthContext);
@@ -54,7 +55,14 @@ const Register = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-       console.log(user)
+       console.log(user);
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "User is create successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
        fetch("http://localhost:5000/users", {
         method: 'POST',
@@ -65,14 +73,22 @@ const Register = () => {
        })
          .then((res) => res.json())
          .then((data) => {
-           console.log(data);
+          //  console.log(data);
+           
          });
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
+        // console.log(errorMessage, errorCode);
+        Swal.fire({
+          position: "top-center",
+          icon: "error",
+          title: "User is all ready exists",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         // ..
       });
   };

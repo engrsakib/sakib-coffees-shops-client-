@@ -22,6 +22,12 @@ const Headder = () => {
         >
           Add Cofee
         </Link>
+        <Link
+          to={"/auth/user"}
+          className="hover:bg-green-900 p-2 rounded-md hover:text-gray-200"
+        >
+          All Users
+        </Link>
       </>
     );
     return (
@@ -64,8 +70,8 @@ const Headder = () => {
             </ul>
           </div>
           <div className="navbar-end">
-            <Link to={`/auth/user/login`} className="btn">
-              LogIn
+            <Link to={`/auth/user/register`} className="btn">
+              Add Users
             </Link>
           </div>
         </div>
