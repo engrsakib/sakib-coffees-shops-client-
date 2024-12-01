@@ -1,9 +1,9 @@
 import React from "react";
 import { FaEye, FaPenFancy, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 const Coffee = ({ cof, setALL, all }) => {
-  //   console.log(cof);
+  //   //(cof);
   const {
     _id,
     photo,
@@ -45,7 +45,7 @@ const Coffee = ({ cof, setALL, all }) => {
           fetch(`http://localhost:5000/coffee/${id}`, {
             method: "DELETE",
           });
-          const remain = all.filter(co => co._id != _id);
+          const remain = all.filter((co) => co._id != _id);
           setALL(remain);
         } else if (
           /* Read more about handling dismissals below */

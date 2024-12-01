@@ -12,10 +12,9 @@ const AddCofee = () => {
     category: "",
     details: "",
     photo: "",
-    price: ""
+    price: "",
   });
 
-  
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +27,7 @@ const AddCofee = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Sending Data:", formData); // Debugging purposes
+    // //("Sending Data:", formData); // Debugging purposes
 
     try {
       const response = await fetch("http://localhost:5000/coffee", {
@@ -41,7 +40,7 @@ const AddCofee = () => {
 
       if (response.ok) {
         // const result = await response.json();
-        // console.log("Server Response:", result);
+        // //("Server Response:", result);
         toast.success("Coffee added successfully");
       } else {
         console.error("Failed to update coffee details:", response.status);
@@ -51,7 +50,6 @@ const AddCofee = () => {
       console.error("Network Error:", error);
       toast.alert("Network error. Please check your connection.");
     }
-    
   };
 
   return (

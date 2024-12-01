@@ -6,8 +6,8 @@ const Coffeeall = () => {
   const Loadall = useLoaderData();
 
   const [all, setALL] = useState(Loadall);
-  
-  //   console.log(all);
+
+  //   //(all);
   return (
     <div className="grid md:grid-cols-2 gap-3">
       {all.map((cof, i) => (

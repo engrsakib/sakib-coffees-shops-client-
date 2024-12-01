@@ -16,7 +16,7 @@ const LogIn = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    //("Form Data Submitted:", formData);
   };
 
   return (
@@ -75,7 +75,10 @@ const LogIn = () => {
           {/* Additional Options */}
           <p className="text-center text-sm text-gray-600 mt-4">
             Don’t have an account?{" "}
-            <Link to="/auth/user/register" className="text-blue-500 hover:underline">
+            <Link
+              to="/auth/user/register"
+              className="text-blue-500 hover:underline"
+            >
               Register now
             </Link>
           </p>

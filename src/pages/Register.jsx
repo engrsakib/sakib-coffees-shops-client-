@@ -24,7 +24,6 @@ const Register = () => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -48,14 +47,14 @@ const Register = () => {
       setConfirmPasswordError("");
     }
 
-    console.log("Form Data Submitted:", formData);
-    const {email, password, name, photo} = formData;
-    const newUser = {name, email, photo};
+    //("Form Data Submitted:", formData);
+    const { email, password, name, photo } = formData;
+    const newUser = { name, email, photo };
     createUser(email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-       console.log(user);
+        //(user);
         Swal.fire({
           position: "top-center",
           icon: "success",
@@ -64,24 +63,23 @@ const Register = () => {
           timer: 1500,
         });
 
-       fetch("http://localhost:5000/users", {
-        method: 'POST',
-        headers:{
-            'content-type' : 'application/json'
-        },
-        body: JSON.stringify(newUser)
-       })
-         .then((res) => res.json())
-         .then((data) => {
-          //  console.log(data);
-           
-         });
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            //  //(data);
+          });
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // console.log(errorMessage, errorCode);
+        // //(errorMessage, errorCode);
         Swal.fire({
           position: "top-center",
           icon: "error",
@@ -89,8 +87,17 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
         // ..
       });
+    // from data empty
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      photo: "",
+    });
   };
 
   return (
@@ -215,7 +222,10 @@ const Register = () => {
           {/* Additional Options */}
           <p className="text-center text-sm text-gray-600 mt-4">
             Already have an account?{" "}
-            <Link to="/auth/user/login" className="text-blue-500 hover:underline">
+            <Link
+              to="/auth/user/login"
+              className="text-blue-500 hover:underline"
+            >
               Log In
             </Link>
           </p>

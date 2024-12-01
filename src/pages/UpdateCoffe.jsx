@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const UpdateCoffe = () => {
   const data = useLoaderData();
-//   console.log(data);
+  //   //(data);
 
   const {
     _id,
@@ -39,7 +39,7 @@ const UpdateCoffe = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    //   console.log("Updated Coffee Data:", formData);
+    //   //("Updated Coffee Data:", formData);
     // Send formData to the server using fetch/axios
     fetch(`http://localhost:5000/coffee/${_id}`, {
       method: "PUT",
